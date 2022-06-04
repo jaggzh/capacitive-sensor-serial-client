@@ -31,17 +31,3 @@ void loop() {
 	/* } */
 }
 
-void ser_add(TXOnlySerial ser, uint8_t c) {
-	if (!ser_counter) ser_send_startseq(ser);
-	ser_counter++;
-	ser.write(c);
-}
-
-void ser_send_startseq(TXOnlySerial ser) {
-	ser.write(SER_STSEQ1);
-	ser.write(SER_STSEQ2);
-}
-void ser_send_endseq(TXOnlySerial ser) {
-	ser.write(SER_ENSEQ1);
-	ser.write(SER_ENSEQ2);
-}
