@@ -117,4 +117,23 @@ void SerialMagic<T>::add(U v) {
 		add(((uint8_t *)(&v))[i]);
 }
 
+
+
 #endif  // _SERIALMAGIC_H
+
+class Serious {
+    public:
+		Serious();
+		void write(uint8_t);
+};
+Serious::Serious() { }
+void Serious::write(uint8_t c) {
+    printf("C: %d\n", c);
+}
+
+int main() {
+	Serious dog;
+	SerialMagic<Serious> ser(dog, 4);
+	for (int i=65; i<75; i++) ser.add((uint16_t)i);
+}
+
