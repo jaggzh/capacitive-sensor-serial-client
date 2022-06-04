@@ -1,7 +1,15 @@
+/* by jaggz.h {who is at} gmail.com
+ * 2022-06-05
+ * This is Copyright GPL3.0, with the one change that I am not requiring
+ * the copy of GPL3.0 to be included with it. (I think that's one of their
+ * conditions).
+ */
+
 #include <Arduino.h>
 #include <TXOnlySerial.h>
 
-#include "serial_defs.h"
+#include <.h>
+#include "defs.h"
 
 /*
 Todo:
@@ -10,7 +18,7 @@ Todo:
 */
 
 #define TXPIN A0
-#define RXPIN A1 /* Dummy pin. We're not rx'ing */
+// #define RXPIN A1 /* Dummy pin. We're not rx'ing */
 
 TXOnlySerial ser(TXPIN); // RX, TX
 
