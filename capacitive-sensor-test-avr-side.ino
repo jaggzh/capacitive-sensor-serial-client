@@ -8,7 +8,7 @@
 #include <Arduino.h>
 #include <TXOnlySerial.h>
 
-#include <.h>
+#include "SerialMagicBuf.h"
 #include "defs.h"
 
 /*
@@ -20,22 +20,16 @@ Todo:
 #define TXPIN A0
 // #define RXPIN A1 /* Dummy pin. We're not rx'ing */
 
-TXOnlySerial ser(TXPIN); // RX, TX
-
-uint16_t ser_counter=0;
+SerialMagic<TXOnlySerial> ser(TXPIN); // (RX,TX) if using SoftwareSerial
 
 void setup() {
 	Serial.begin(115200);
-	ser.begin(9600);
+	ser._ser.begin(9600);
 }
 void loop() {
 	static uint8_t i=0;
 	i++;
-	/* if (ser.available()) { */
-		Serial.write("Writing\n");
-		ser.write(i);
-	/* } else { */
-	/* 	Serial.write("No ser.available()\n"); */
-	/* } */
+	Serial.write("Writing\n");
+	ser.add(i); // <-- Calls write()
 }
 

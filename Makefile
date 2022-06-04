@@ -5,5 +5,5 @@ vi:
 	vi \
 		Makefile \
 		capacitive-sensor-test-avr-side.ino \
-		serialmagicbuf.h \
+		SerialMagicBuf.h \
 		defs.h
