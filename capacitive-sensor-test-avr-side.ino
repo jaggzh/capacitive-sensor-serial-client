@@ -8,8 +8,8 @@
 #include <Arduino.h>
 #include <TXOnlySerial.h>
 
+#include "serialmagic-defs.h"
 #include "SerialMagicBuf.h"
-#include "defs.h"
 
 /*
 Todo:

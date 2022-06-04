@@ -1,5 +1,13 @@
-tests: serialbuf
+tests: serialbuf_run
+
+serialbuf_run: serialbuf
+	./serialbuf
 
 serialbuf: serialbuf.cpp
-	printf "%s " g++ --std=c++11 -o '$<' $>
-	echo
+	g++ --std=c++11 -o $@ $^
+
+vi:
+	vi \
+		Makefile \
+		serialbuf.cpp \
+		../SerialMagicChunks.h
