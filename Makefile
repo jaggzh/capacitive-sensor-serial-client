@@ -4,6 +4,8 @@ all:
 vi:
 	vi \
 		Makefile \
-		capacitive-sensor-test-avr-side.ino \
-		SerialMagicChunksTX.h \
-		serialmagic-defs.h
+		capacitive-sensor-serial-client.ino \
+		sensor.cpp \
+		sensor.h \
+		~/Arduino/libraries/MagicSerialChunk/src/MagicSerialChunk.c \
+		~/Arduino/libraries/MagicSerialChunk/src/MagicSerialChunk.h
