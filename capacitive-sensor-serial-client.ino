@@ -7,9 +7,10 @@
 
 #include <Arduino.h>
 #include <TXOnlySerial.h>
+/* #define DEBUG_PRINT */
 #include <PrintHero.h>
 
-#define MAGICCHUNK_DEBUG
+/* #define MAGICCHUNK_DEBUG */
 #include <MagicSerialChunk.h>
 
 #include "sensor.h"
@@ -34,7 +35,7 @@ struct SerialChunk *chunker = &chunker_real;
 
 void write_cb(struct SerialChunk *sp, uint8_t c) {
 	static char wrap=0;
-	/* Serial.write("Writing "); */
+	/* Serial.println("write_cb()"); */
 	/* if (wrap < 16) { */
 	/* 	spl((uint16_t) c); */
 	/* 	/1* sp(' '); *1/ */
@@ -48,7 +49,10 @@ void write_cb(struct SerialChunk *sp, uint8_t c) {
 
 void setup() {
 	Serial.begin(115200);
+	/* Serial.println("Hallooo!"); */
+	/* delay(500); */
 	ser.begin(SENSOR_BAUD);
+	/* delay(500); */
 	// `serial_chunk_init(SerialChunk*, unsigned int, void (*)(SerialChunk*, unsigned char))'
 	serial_chunk_init(chunker, CHUNKSIZE, &write_cb);
 	// serial_chunk_init(SerialChunk*, unsigned int, void (*)(SerialChunk*, unsigned char))'
@@ -59,17 +63,32 @@ void loop() {
 	/* static uint8_t i=0; */
 	/* i++; */
 	static unsigned long ctr=0;
+	/* Serial.println("Lallooo!"); */
+	/* delay(100); */
 	int updated_flag = loop_sensor(now);
+	/* Serial.println("Slallooo!"); */
+	/* delay(100); */
 	if (now - last_ser_output > DELAY_SERIAL_OUTPUT_MS) {
-		if (updated_flag) { // did anything new happen anyway?
+		if (!updated_flag) { // did anything new happen anyway?
+			/* Serial.println("Nallooo!"); */
+			/* delay(100); */
+			return;
+		} else {
+			/* Serial.println("Dallooo!"); */
+			/* delay(100); */
 			/* chunker->add(chunker, (uint8_t) now); // <-- Calls write_cb() */
 			/* chunker->add(chunker, longavg); // <-- Calls write_cb() */
 			/* chunker->add(chunker, vavg); // <-- Calls write_cb() */
 
 			// Add bytes of uint16_t
-			chunker->add(chunker,  raw_reading & 0xff); // <-- Calls write_cb() */
-			chunker->add(chunker, (raw_reading >> 8) && 0xff); // <-- Calls write_cb() */
-			DSPL(raw_reading);
+			dbsp(raw_reading);
+			dbsp(" -> lo:");
+			dbsp(raw_reading & 0xff);
+			dbsp(" hi:");
+			dbspl((raw_reading >> 8) & 0xff);
+				// \/  Calls write_cb() 
+			chunker->add(chunker, (uint8_t)(raw_reading & 0xff));
+			chunker->add(chunker, (uint8_t)((raw_reading >> 8) & 0xff));
 
 			/* chunker->add(chunker, ctr & 0xff); */
 			/* ctr++; */
